@@ -21,7 +21,7 @@ async function getFact() {
     const factsCollection = collection(db, 'randomFacts');
     const factsSnapshot = await getDocs(factsCollection);
     const facts = [];
-    
+        
     factsSnapshot.forEach(doc => facts.push(doc.data().fact));
 
     if (facts.length > 0) {
@@ -35,5 +35,21 @@ async function getFact() {
     throw new Error("Fout bij het ophalen van feit.");
   }
 }
-
-module.exports = { db, getFact };
+async function getImage() {
+  try {
+      const imagesCollection = collection(db, 'randomImages');
+      const imagesSnapshot = await getDocs(imagesCollection);
+      const images = [];
+      imagesSnapshot.forEach(doc => images.push(doc.data().image));
+      if (images.length > 0) {
+          const randomImage = images[Math.floor(Math.random() * images.length)];
+          return randomImage;
+      } else {
+          throw new Error("Er zijn geen images beschikbaar.");
+      }
+  } catch (error) { 
+      console.error("Fout bij het ophalen van image:", error);
+      throw new Error("Fout bij het ophalen van image.");
+  }
+}
+module.exports = { db, getFact, getImage };
