@@ -21,7 +21,7 @@ async function getFact() {
     const factsCollection = collection(db, 'randomFacts');
     const factsSnapshot = await getDocs(factsCollection);
     const facts = [];
-    
+        
     factsSnapshot.forEach(doc => facts.push(doc.data().fact));
 
     if (facts.length > 0) {
